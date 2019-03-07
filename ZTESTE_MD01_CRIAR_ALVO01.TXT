@@ -1,0 +1,46 @@
+*----------------------------------------------------------------------*
+***INCLUDE ZTESTE_MD01_CRIAR_ALVO01.
+*----------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*&      Module  CRIAR_ALV  OUTPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE criar_alv OUTPUT.
+
+  DATA: v_save      TYPE c VALUE 'A',
+        l_container TYPE scrfname VALUE 'CC_9000'.
+*I_SAVE = ''. Não terá a opção de salvar Layout
+*I_SAVE = 'X' Apenas layout global
+*I_SAVE = 'A' Usuário específico e Global
+*I_SAVE = 'U' Somente usuário específico
+
+
+
+  IF g_cc_9000 IS INITIAL.
+    CREATE OBJECT g_cc_9000
+      EXPORTING
+        container_name = l_container.
+
+    CREATE OBJECT g_grid_9000
+      EXPORTING
+        i_parent = g_cc_9000.
+
+    CLEAR wa_layout.
+    wa_layout-zebra = 'X'.
+    wa_layout-sel_mode = 'A'.
+
+    PERFORM monta_fieldcat.
+
+    CALL METHOD g_grid_9000->set_table_for_first_display
+      EXPORTING
+        is_layout       = wa_layout
+        i_save          = v_save
+      CHANGING
+        it_fieldcatalog = it_fieldcat
+        it_outtab       = it_vbap.
+  ELSE.
+    CALL METHOD g_grid_9000->refresh_table_display.
+  ENDIF.
+
+ENDMODULE.

@@ -1,0 +1,28 @@
+*&---------------------------------------------------------------------*
+*& Report  ZTESTE_MD01
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+REPORT zteste_md01.
+
+DATA: it_fieldcat TYPE lvc_t_fcat,    "Estrutura utilizada para definir colunas do ALV
+      wa_fieldcat TYPE lvc_s_fcat,
+      wa_layout   TYPE lvc_s_layo,    "Estrutura utilizada para definir Layout do ALV
+      g_cc_9000   TYPE REF TO cl_gui_custom_container,
+      g_grid_9000 TYPE REF TO cl_gui_alv_grid.
+
+
+DATA: it_vbap TYPE STANDARD TABLE OF vbap.
+
+REFRESH it_vbap.
+SELECT * UP TO 10 ROWS
+  FROM vbap
+  INTO TABLE it_vbap.
+
+CALL SCREEN 9000.
+
+INCLUDE zteste_md01_criar_alvo01.
+
+INCLUDE zteste_md01_monta_fieldcatf01.

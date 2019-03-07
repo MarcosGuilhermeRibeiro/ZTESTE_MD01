@@ -1,0 +1,28 @@
+*----------------------------------------------------------------------*
+***INCLUDE ZTESTE_MD01_MONTA_FIELDCATF01.
+*----------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*&      Form  MONTA_FIELDCAT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*  -->  p1        text
+*  <--  p2        text
+*----------------------------------------------------------------------*
+FORM monta_fieldcat .
+  CLEAR: wa_fieldcat.
+  wa_fieldcat-tabname     = 'IT_VBAP'.
+  wa_fieldcat-fieldname   = 'VBELN'.
+  wa_fieldcat-ref_table   = 'VBAP'.
+  wa_fieldcat-ref_field   = 'VBELN'.
+  wa_fieldcat-col_opt     = 'X'.
+  APPEND wa_fieldcat TO it_fieldcat.
+
+  CLEAR: wa_fieldcat.
+  wa_fieldcat-tabname     = 'IT_VBAP'.
+  wa_fieldcat-fieldname   = 'POSNR'.
+  wa_fieldcat-ref_table   = 'VBAP'.
+  wa_fieldcat-ref_field   = 'POSNR'.
+  wa_fieldcat-col_opt     = 'X'.
+  APPEND wa_fieldcat TO it_fieldcat.
+ENDFORM.
